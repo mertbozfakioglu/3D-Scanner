@@ -82,7 +82,7 @@ class Scanner:
                           height = "1",
                           viewpoint = "0 0 0 1 0 0 0",
                           data = "ascii",
-                          file_name = "scan.pcd"):
+                          file_name = "scan.PCD"):
 ##      writes the point array into a PCD file
         PCD = open(file_name,"w")
         PCD.write("VERSION " + version)
