@@ -47,7 +47,7 @@ class Scanner:
 ##      returns the x,z coordinates calculated by the rotation matrix
         return d*math.cos(math.radians(t)),d*math.sin(math.radians(t))
     
-    def scan(self, t = 1, h = 1):
+    def scan(self, t = 5, h = 0.2):
 ##      t is the angle of a single rotation        
         none_count = 0
         points = []
@@ -62,8 +62,7 @@ class Scanner:
                 self.rotate_table(t)
             else:
                 none_count += 1
-        self.write_to_PCD_file(point_array = points,
-                               points = len(points))
+        self.write_to_xyz_file(point_array = points)
         print("scan completed")
             
         
@@ -82,7 +81,7 @@ class Scanner:
                           height = "1",
                           viewpoint = "0 0 0 1 0 0 0",
                           data = "ascii",
-                          file_name = "scan.PCD"):
+                          file_name = "scan.pcd"):
 ##      writes the point array into a PCD file
         PCD = open(file_name,"w")
         PCD.write("VERSION " + version)
@@ -112,10 +111,19 @@ class Scanner:
     
         return
 
+    def write_to_xyz_file(self,
+    	point_array,
+    	file_name = "scan.xyz"):
+    	xyz = open(file_name,"w")
+    	for point in point_array:
+    		xyz.write(str(point[0]) + " " + str(point[1]) + " " + str(point[2]))
+    		xyz.write("\n")
+    	xyz.close()
+
     def plot(self):
 ##      plots the point cloud on-run if self.plot is True
         return
     
-scanner = Scanner(distance = 30, radius = 10, max_height = 10)
+scanner = Scanner(distance = 30, radius = 10, max_height = 5)
 scanner.scan()
         
